@@ -2,8 +2,9 @@ from collections import deque
 
 queue = deque()
 
-name = input()
+
 while True:
+    name = input()
     if name == "End":
         print(f"{len(queue)} people remaining.")
         break
@@ -12,6 +13,3 @@ while True:
             print(queue.popleft())
     else:
         queue.append(name)
-
-    name = input()
-
