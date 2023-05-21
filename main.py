@@ -1,25 +1,21 @@
-n = int(input())
+first = set(int(x) for x in input().split())
+second = set(int(x) for x in input().split())
 
-vip = set()
-regular_guests = set()
+for _ in range(int(input())):
+    first_command, second_command, *data = input().split()  # Add First 5 6 9 3 => ["Add", "First", 5, 6, 9, 3]
 
-for _ in range(n):
-    reservation_code = input()
-    if reservation_code[0].isdigit():
-        vip.add(reservation_code)
+    command = first_command + " " + second_command
+
+    if command == "Add First":
+        [first.add(int(el)) for el in data]
+    elif command == "Add Second":
+        [second.add(int(el)) for el in data]
+    elif command == "Remove First":
+        [first.discard(int(el)) for el in data]
+    elif command == "Remove Second":
+        [second.discard(int(el)) for el in data]
     else:
-        regular_guests.add(reservation_code)
+        print(first.issubset(second) or second.issubset(first))
 
-arrived_guests = set()
-
-while True:
-    command = input()
-
-    if command == "END":
-        break
-
-    arrived_guests.add(command)
-
-print(len(vip) + len(regular_guests))
-print(*sorted(vip), sep="\n")
-print(*sorted(regular_guests), sep="\n")
+print(*sorted(first), sep=", ")
+print(*sorted(second), sep=", ")
