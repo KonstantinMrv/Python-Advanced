@@ -1,21 +1,15 @@
-first = set(int(x) for x in input().split())
-second = set(int(x) for x in input().split())
+from collections import deque
 
-for _ in range(int(input())):
-    first_command, second_command, *data = input().split()  # Add First 5 6 9 3 => ["Add", "First", 5, 6, 9, 3]
+rows, cols = [int(x) for x in input().split()]
+word = list(input())
 
-    command = first_command + " " + second_command
+word_copy = deque(word)
 
-    if command == "Add First":
-        [first.add(int(el)) for el in data]
-    elif command == "Add Second":
-        [second.add(int(el)) for el in data]
-    elif command == "Remove First":
-        [first.discard(int(el)) for el in data]
-    elif command == "Remove Second":
-        [second.discard(int(el)) for el in data]
+for row in range(rows):
+    while len(word_copy) < cols:
+        word_copy.extend(word)
+
+    if row % 2 == 0:
+        print(*[word_copy.popleft() for _ in range(cols)], sep="")
     else:
-        print(first.issubset(second) or second.issubset(first))
-
-print(*sorted(first), sep=", ")
-print(*sorted(second), sep=", ")
+        print(*[word_copy.popleft() for _ in range(cols)][::-1], sep="")
