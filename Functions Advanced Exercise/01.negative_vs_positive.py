@@ -14,7 +14,7 @@ def negative_sum():
     return negatives
 
 
-numbers = [int(x) for x in input().split(" ")]
+numbers = [int(x) for x in input().split()]
 
 
 negative_numbers = negative_sum()
