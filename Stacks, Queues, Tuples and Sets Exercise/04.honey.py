@@ -2,18 +2,16 @@ from collections import deque
 
 
 def honey_made(bee, nectar):
-    global total_honey
     sign = honey_making.popleft()
 
     if sign == "*":
-        total_honey += abs(bee * nectar)
+        return bee * nectar
     elif sign == "+":
-        total_honey += abs(bee + nectar)
+        return bee + nectar
     elif sign == "/":
-        if nectar > 0:
-            total_honey += abs(bee / nectar)
+        return bee / nectar
     elif sign == "-":
-        total_honey += abs(bee - nectar)
+        return bee - nectar
 
 
 working_bees = deque(int(el) for el in input().split())
@@ -28,14 +26,10 @@ while working_bees and nectar:
     last_nectar = nectar.pop()
 
     if first_bee <= last_nectar:
-        honey_made(first_bee, last_nectar)
+        if last_nectar > 0:
+            total_honey += abs(honey_made(first_bee, last_nectar))
     else:
-        while True:
-            new_nectar = nectar.pop()
-
-            if first_bee <= new_nectar:
-                honey_made(first_bee, new_nectar)
-                break
+        working_bees.appendleft(first_bee)
 
 print(f"Total honey made: {total_honey}")
 if working_bees:

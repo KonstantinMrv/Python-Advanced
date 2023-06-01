@@ -1,21 +1,26 @@
-first_line = set(int(x) for x in input().split())
-second_line = set(int(x) for x in input().split())
+first_sequence = set(int(el) for el in input().split())
+second_sequence = set(int(el) for el in input().split())
+
 
 for _ in range(int(input())):
-    first_command, second_command, *data = input().split()
+    command, location, *data = input().split()
 
-    command = first_command + " " + second_command
+    if command == "Add":
 
-    if command == "Add First":
-        [first_line.add(int(x)) for x in data]
-    elif command == "Add Second":
-        [second_line.add(int(x)) for x in data]
-    elif command == "Remove First":
-        [first_line.discard(int(x)) for x in data]
-    elif command == "Remove Second":
-        [second_line.discard(int(x)) for x in data]
+        if location == "First":
+            [first_sequence.add(int(el)) for el in data]
+        elif location == "Second":
+            [second_sequence.add(int(el)) for el in data]
+
+    elif command == "Remove":
+
+        if location == "First":
+            [first_sequence.discard(int(el)) for el in data]
+        elif location == "Second":
+            [second_sequence.discard(int(el)) for el in data]
+
     else:
-        print(first_line.issubset(second_line) or second_line.issubset(first_line))
+        print(first_sequence.issubset(second_sequence) or second_sequence.issubset(first_sequence))
 
-print(*sorted(first_line), sep=", ")
-print(*sorted(second_line), sep=", ")
+print(*sorted(first_sequence), sep=", ")
+print(*sorted(second_sequence), sep=", ")

@@ -1,30 +1,32 @@
-from collections import deque
 from math import floor
+from collections import deque
+from functools import reduce
 
-expression = deque(input().split())  # 6 3 5 - 2 1 * 5 /
 
-idx = 0
+def append_result(res):
+    queue.clear()
+    queue.append(res)
 
-while idx < len(expression):
-    element = expression[idx]
+
+expression = input().split()
+queue = deque()
+
+
+for element in expression:
 
     if element == "*":
-        for _ in range(idx - 1):
-            expression.appendleft(int(expression.popleft()) * int(expression.popleft()))
-    elif element == "/":
-        for _ in range(idx - 1):
-            expression.appendleft(int(expression.popleft()) / int(expression.popleft()))
+        result = reduce(lambda x, y: x * y, queue)
+        append_result(result)
     elif element == "+":
-        for _ in range(idx - 1):
-            expression.appendleft(int(expression.popleft()) + int(expression.popleft()))
+        result = reduce(lambda x, y: x + y, queue)
+        append_result(result)
+    elif element == "/":
+        result = reduce(lambda x, y: x / y, queue)
+        append_result(floor(result))
     elif element == "-":
-        for _ in range(idx - 1):
-            expression.appendleft(int(expression.popleft()) - int(expression.popleft()))
+        result = reduce(lambda x, y: x - y, queue)
+        append_result(result)
+    else:
+        queue.append(int(element))
 
-    if element in "*/+-":
-        del expression[1]
-        idx = 1
-
-    idx += 1
-
-print(floor(int(expression[0])))
+print(*queue)
